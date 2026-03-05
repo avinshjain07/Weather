@@ -1,2 +1,205 @@
-<p> Happy Holi </p>
-<p> Avinsh Jain</p>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WeatherSphere</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Animated background orbs -->
+  <div class="bg-orb orb1"></div>
+  <div class="bg-orb orb2"></div>
+  <div class="bg-orb orb3"></div>
+
+  <div class="wrapper">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="8" stroke="currentColor" stroke-width="2"/>
+            <circle cx="14" cy="14" r="13" stroke="currentColor" stroke-width="1" stroke-dasharray="3 2" opacity="0.5"/>
+            <line x1="14" y1="1" x2="14" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="14" y1="24" x2="14" y2="27" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="1" y1="14" x2="4" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <line x1="24" y1="14" x2="27" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="logo-text">WeatherSphere</span>
+      </div>
+      <div class="header-time" id="headerTime"></div>
+    </header>
+
+    <!-- Search -->
+    <section class="search-section">
+      <div class="search-container">
+        <div class="search-bar">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="cityInput" placeholder="Search city, e.g. Mumbai, London…" autocomplete="off" />
+          <button class="search-btn" id="searchBtn" onclick="getWeather()">
+            <span>Search</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </div>
+        <div class="suggestions" id="suggestions"></div>
+      </div>
+    </section>
+
+    <!-- Loading -->
+    <div class="loading-state" id="loading">
+      <div class="spinner"></div>
+      <p>Fetching weather data…</p>
+    </div>
+
+    <!-- Error -->
+    <div class="error-state" id="error">
+      <div class="error-icon">✕</div>
+      <p id="errorMsg">City not found. Try again.</p>
+    </div>
+
+    <!-- Main Weather -->
+    <main class="weather-main" id="weatherMain">
+
+      <!-- Hero Current Weather -->
+      <section class="hero-card" id="heroCard">
+        <div class="hero-left">
+          <div class="location-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span id="cityName">—</span>
+            <span class="country-badge" id="countryName"></span>
+          </div>
+          <div class="temp-display">
+            <span class="temp-value" id="tempValue">—</span>
+            <span class="temp-unit">°C</span>
+          </div>
+          <div class="condition-text" id="conditionText">—</div>
+          <div class="feels-like">Feels like <strong id="feelsLike">—</strong>°C &nbsp;·&nbsp; <span id="localTime">—</span></div>
+        </div>
+        <div class="hero-right">
+          <div class="weather-icon-large" id="weatherIconLarge">🌤️</div>
+          <div class="hi-lo">
+            <span>↑ <strong id="maxTemp">—</strong>°</span>
+            <span>↓ <strong id="minTemp">—</strong>°</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats Row -->
+      <section class="stats-row">
+        <div class="stat-card" id="aqiCard">
+          <div class="stat-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/>
+            </svg>
+            <span>Air Quality</span>
+          </div>
+          <div class="stat-value aqi-value" id="aqiValue">—</div>
+          <div class="stat-label" id="aqiLabel">AQI Index</div>
+          <div class="aqi-bar">
+            <div class="aqi-bar-fill" id="aqiBarFill"></div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+            <span>Humidity</span>
+          </div>
+          <div class="stat-value" id="humidityValue">—</div>
+          <div class="stat-label">Relative Humidity</div>
+          <div class="humidity-bar">
+            <div class="humidity-bar-fill" id="humidityBarFill"></div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/>
+            </svg>
+            <span>Wind</span>
+          </div>
+          <div class="stat-value" id="windValue">—</div>
+          <div class="stat-label">km/h · <span id="windDir">—</span></div>
+          <div class="wind-compass" id="windCompass">
+            <div class="compass-needle" id="compassNeedle"></div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <span>UV Index</span>
+          </div>
+          <div class="stat-value" id="uvValue">—</div>
+          <div class="stat-label" id="uvLabel">UV Level</div>
+          <div class="uv-bar">
+            <div class="uv-gradient"></div>
+            <div class="uv-marker" id="uvMarker"></div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+            <span>Visibility</span>
+          </div>
+          <div class="stat-value" id="visibilityValue">—</div>
+          <div class="stat-label">Kilometres</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+            <span>Pressure</span>
+          </div>
+          <div class="stat-value" id="pressureValue">—</div>
+          <div class="stat-label">Millibars</div>
+        </div>
+      </section>
+
+      <!-- 5-Day Forecast -->
+      <section class="forecast-section">
+        <h2 class="section-title">5-Day Forecast</h2>
+        <div class="forecast-grid" id="forecastGrid">
+          <!-- JS generated -->
+        </div>
+      </section>
+
+      <!-- Hourly Forecast -->
+      <section class="hourly-section">
+        <h2 class="section-title">Today's Hourly</h2>
+        <div class="hourly-scroll" id="hourlyScroll">
+          <!-- JS generated -->
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="footer">Powered by WeatherAPI &nbsp;·&nbsp; WeatherSphere © 2026</footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
