@@ -1,11 +1,5 @@
-/* ============================================
-   WeatherSphere — script.js
-============================================ */
-
 const API_KEY = "c894f55bb4f54be188b94946260503";
 const BASE    = "https://api.weatherapi.com/v1";
-
-/* ── Live Clock ── */
 function updateClock() {
   const el = document.getElementById("headerTime");
   if (!el) return;
@@ -17,13 +11,9 @@ function updateClock() {
 }
 updateClock();
 setInterval(updateClock, 30000);
-
-/* ── Enter key support ── */
 document.getElementById("cityInput").addEventListener("keypress", e => {
   if (e.key === "Enter") getWeather();
 });
-
-/* ── UI helpers ── */
 function showLoading(show) {
   document.getElementById("loading").classList.toggle("show", show);
 }
@@ -38,8 +28,6 @@ function clearError() {
 function showWeather(show) {
   document.getElementById("weatherMain").classList.toggle("show", show);
 }
-
-/* ── Weather icon mapper (emoji) ── */
 function conditionIcon(code, isDay) {
   const map = {
     1000: isDay ? "☀️" : "🌙",
@@ -64,8 +52,6 @@ function conditionIcon(code, isDay) {
   };
   return map[code] || "🌡️";
 }
-
-/* ── AQI helpers ── */
 const AQI_INFO = [
   { max: 1, label: "Good",             cls: "aqi-good",     pct: 15 },
   { max: 2, label: "Moderate",         cls: "aqi-moderate", pct: 30 },
@@ -77,8 +63,6 @@ const AQI_INFO = [
 function aqiInfo(index) {
   return AQI_INFO[Math.min(index, 6) - 1] || AQI_INFO[5];
 }
-
-/* ── UV helpers ── */
 function uvLabel(v) {
   if (v <= 2)  return "Low";
   if (v <= 5)  return "Moderate";
@@ -86,15 +70,11 @@ function uvLabel(v) {
   if (v <= 10) return "Very High";
   return "Extreme";
 }
-
-/* ── Day name ── */
 function dayName(dateStr, index) {
   if (index === 0) return "Today";
   const d = new Date(dateStr);
   return d.toLocaleDateString("en-US", { weekday: "short" });
 }
-
-/* ── Main fetch ── */
 async function getWeather() {
   const city = document.getElementById("cityInput").value.trim();
   if (!city) { showError("Please enter a city name."); return; }
@@ -104,7 +84,6 @@ async function getWeather() {
   showLoading(true);
 
   try {
-    // forecast (5 days) + current + AQI
     const res = await fetch(
       `${BASE}/forecast.json?key=${API_KEY}&q=${encodeURIComponent(city)}&days=5&aqi=yes&alerts=no`
     );
@@ -123,13 +102,11 @@ async function getWeather() {
   }
 }
 
-/* ── Populate all UI ── */
 function populateUI(d) {
   const cur  = d.current;
   const loc  = d.location;
   const fc   = d.forecast.forecastday;
 
-  /* Hero */
   document.getElementById("cityName").textContent    = loc.name;
   document.getElementById("countryName").textContent = loc.country;
   document.getElementById("tempValue").textContent   = Math.round(cur.temp_c);
@@ -141,8 +118,6 @@ function populateUI(d) {
   document.getElementById("weatherIconLarge").textContent = conditionIcon(cur.condition.code, cur.is_day);
   document.getElementById("maxTemp").textContent = Math.round(fc[0].day.maxtemp_c);
   document.getElementById("minTemp").textContent = Math.round(fc[0].day.mintemp_c);
-
-  /* AQI */
   const aqiIndex = cur.air_quality?.["us-epa-index"] || 1;
   const ai = aqiInfo(aqiIndex);
   const aqiVal = document.getElementById("aqiValue");
@@ -156,32 +131,20 @@ function populateUI(d) {
     ai.cls === "aqi-usg" ? "#f0a44a" :
     ai.cls === "aqi-unhealthy" ? "#f04a4a" :
     ai.cls === "aqi-very" ? "#b44af0" : "#7e0000";
-
-  /* Humidity */
   const hum = cur.humidity;
   document.getElementById("humidityValue").textContent = hum + "%";
   document.getElementById("humidityBarFill").style.width = hum + "%";
-
-  /* Wind */
   document.getElementById("windValue").textContent = Math.round(cur.wind_kph);
   document.getElementById("windDir").textContent   = cur.wind_dir;
   const windDeg = cur.wind_degree || 0;
   document.getElementById("compassNeedle").style.transform =
     `translateX(-50%) rotate(${windDeg}deg)`;
-
-  /* UV */
   const uv = cur.uv;
   document.getElementById("uvValue").textContent = uv;
   document.getElementById("uvLabel").textContent = uvLabel(uv);
   document.getElementById("uvMarker").style.left = Math.min((uv / 11) * 100, 100) + "%";
-
-  /* Visibility */
   document.getElementById("visibilityValue").textContent = cur.vis_km;
-
-  /* Pressure */
   document.getElementById("pressureValue").textContent = cur.pressure_mb;
-
-  /* 5-Day Forecast */
   const grid = document.getElementById("forecastGrid");
   grid.innerHTML = "";
   fc.forEach((day, i) => {
@@ -202,13 +165,10 @@ function populateUI(d) {
     `;
     grid.appendChild(card);
   });
-
-  /* Hourly (today) */
   const hourlyContainer = document.getElementById("hourlyScroll");
   hourlyContainer.innerHTML = "";
   const nowHour = new Date(loc.localtime).getHours();
   const hours = fc[0].hour;
-
   hours.forEach((h) => {
     const hDate = new Date(h.time);
     const hHour = hDate.getHours();
