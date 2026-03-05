@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,15 +8,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-  <!-- Animated background orbs -->
   <div class="bg-orb orb1"></div>
   <div class="bg-orb orb2"></div>
   <div class="bg-orb orb3"></div>
-
   <div class="wrapper">
-
-    <!-- Header -->
     <header class="header">
       <div class="logo">
         <div class="logo-icon">
@@ -32,8 +28,6 @@
       </div>
       <div class="header-time" id="headerTime"></div>
     </header>
-
-    <!-- Search -->
     <section class="search-section">
       <div class="search-container">
         <div class="search-bar">
@@ -51,23 +45,15 @@
         <div class="suggestions" id="suggestions"></div>
       </div>
     </section>
-
-    <!-- Loading -->
     <div class="loading-state" id="loading">
       <div class="spinner"></div>
       <p>Fetching weather data…</p>
     </div>
-
-    <!-- Error -->
     <div class="error-state" id="error">
       <div class="error-icon">✕</div>
       <p id="errorMsg">City not found. Try again.</p>
     </div>
-
-    <!-- Main Weather -->
     <main class="weather-main" id="weatherMain">
-
-      <!-- Hero Current Weather -->
       <section class="hero-card" id="heroCard">
         <div class="hero-left">
           <div class="location-row">
@@ -92,8 +78,6 @@
           </div>
         </div>
       </section>
-
-      <!-- Stats Row -->
       <section class="stats-row">
         <div class="stat-card" id="aqiCard">
           <div class="stat-header">
@@ -108,7 +92,6 @@
             <div class="aqi-bar-fill" id="aqiBarFill"></div>
           </div>
         </div>
-
         <div class="stat-card">
           <div class="stat-header">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -122,7 +105,6 @@
             <div class="humidity-bar-fill" id="humidityBarFill"></div>
           </div>
         </div>
-
         <div class="stat-card">
           <div class="stat-header">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -136,7 +118,6 @@
             <div class="compass-needle" id="compassNeedle"></div>
           </div>
         </div>
-
         <div class="stat-card">
           <div class="stat-header">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -155,7 +136,6 @@
             <div class="uv-marker" id="uvMarker"></div>
           </div>
         </div>
-
         <div class="stat-card">
           <div class="stat-header">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -166,7 +146,6 @@
           <div class="stat-value" id="visibilityValue">—</div>
           <div class="stat-label">Kilometres</div>
         </div>
-
         <div class="stat-card">
           <div class="stat-header">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -178,28 +157,20 @@
           <div class="stat-label">Millibars</div>
         </div>
       </section>
-
-      <!-- 5-Day Forecast -->
       <section class="forecast-section">
         <h2 class="section-title">5-Day Forecast</h2>
         <div class="forecast-grid" id="forecastGrid">
           <!-- JS generated -->
         </div>
       </section>
-
-      <!-- Hourly Forecast -->
       <section class="hourly-section">
         <h2 class="section-title">Today's Hourly</h2>
         <div class="hourly-scroll" id="hourlyScroll">
-          <!-- JS generated -->
         </div>
       </section>
-
     </main>
-
     <footer class="footer">Powered by WeatherAPI &nbsp;·&nbsp; WeatherSphere © 2026</footer>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
