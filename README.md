@@ -49,6 +49,7 @@ Open index.html in your browser. No build tools or server needed.
 This app uses the WeatherAPI free tier.
 StepAction1Go to weatherapi.com2Sign up for a free account3Copy your API key from the dashboard4Paste it into script.js as const API_KEY = "..."
 
+
 ⚠️ Security Note: Never expose your API key in public repositories. For production, route API calls through a backend proxy or environment variable.
 
 
