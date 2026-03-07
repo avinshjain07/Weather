@@ -56,7 +56,7 @@ StepAction1Go to weatherapi.com2Sign up for a free account3Copy your API key fro
 LayerTechnologyMarkupHTML5StylingCSS3 (custom properties, grid, flexbox, animations)LogicVanilla JavaScript (ES2020+, async/await)FontsGoogle Fonts — Bebas Neue, DM Sans, Space MonoDataWeatherAPI REST API
 
 📡 API Endpoints Used
-GET https://api.weatherapi.com/v1/forecast.json
+https://api.weatherapi.com/v1/forecast.json
     ?key=YOUR_KEY
     &q=CITY_NAME
     &days=5
