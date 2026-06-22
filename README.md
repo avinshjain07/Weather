@@ -56,7 +56,7 @@ StepAction1Go to weatherapi.com2Sign up for a free account3Copy your API key fro
 
 
 🎨 Tech Stack
-LayerTechnologyMarkupHTML5StylingCSS3 (custom properties, grid, flexbox, animations)LogicVanilla JavaScript (ES2020+, async/await)FontsGoogle Fonts — Bebas Neue, DM Sans, Space MonoDataWeatherAPI REST API
+Layer Technology Markup HTML5 Styling CSS3 (custom properties, grid, flexbox, animations) Logic Vanilla JavaScript (ES2020+, async/await) Fonts Google Fonts — Bebas Neue, DM Sans, Space MonoDataWeather API REST API
 
 📡 API Endpoints Used
 https://api.weatherapi.com/v1/forecast.json
@@ -66,7 +66,7 @@ https://api.weatherapi.com/v1/forecast.json
     &aqi=yes
     &alerts=no
 Response data used
-FieldUsed forcurrent.temp_cCurrent temperaturecurrent.feelslike_cFeels-like temperaturecurrent.conditionCondition text + icon codecurrent.humidityHumidity percentagecurrent.wind_kph / wind_dir / wind_degreeWind card + compasscurrent.uvUV indexcurrent.vis_kmVisibilitycurrent.pressure_mbPressurecurrent.air_quality["us-epa-index"]AQI index (1–6)forecast.forecastday[].day5-day forecast cardsforecast.forecastday[0].hourHourly strip
+FieldUsed forcurrent.temp_cCurrent temperaturecurrent.feelslike_c Feels-like temperature current.condition Condition text + icon codecurrent.humidity Humidity percentagecurrent.wind_kph / wind_dir / wind_degreeWind card + compasscurrent.uvUV indexcurrent.vis_kmVisibilitycurrent.pressure_mbPressurecurrent.air_quality["us-epa-index"]AQI index (1–6)forecast.forecastday[].day5-day forecast cardsforecast.forecastday[0].hourHourly strip
 
 🌈 AQI Reference
 IndexLabelColor1Good🟢 Teal2Moderate🟡 Yellow3Unhealthy for Sensitive Groups🟠 Orange4Unhealthy🔴 Red5Very Unhealthy🟣 Purple6Hazardous⚫ Dark Red
